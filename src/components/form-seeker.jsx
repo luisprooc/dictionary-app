@@ -12,14 +12,19 @@ import FormResults from "./form-results";
 import { API_URL } from "../constants";
 
 const FormSeeker = () => {
-  const [state, setState] = useState([]);
+  const [state, setState] = useState(null);
+  const [preValue, setPreValue] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(e.target[0].value === preValue) return 
+
     fetch(API_URL + e.target[0].value)
       .then((data) => data.json())
       .then((data) => setState(data))
-      .catch();
+      .catch(() => setState([]));
+
+    setPreValue(e.target[0].value);
   };
 
   return (
@@ -46,7 +51,8 @@ const FormSeeker = () => {
           </Col>
         </Row>
       </Form>
-      <FormResults data={state} />
+      {state && (<FormResults data={state} />)}
+
     </Container>
   );
 };
