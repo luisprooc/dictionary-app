@@ -1,41 +1,52 @@
 import React, { useState } from "react";
-import { Form, FormGroup, Input, Button, Container, Row, Col } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Input,
+  Button,
+  Container,
+  Row,
+  Col,
+} from "reactstrap";
 import FormResults from "./form-results";
+import { API_URL } from "../constants";
 
 const FormSeeker = () => {
   const [state, setState] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${e.target[0].value}`)
+    fetch(API_URL + e.target[0].value)
       .then((data) => data.json())
       .then((data) => setState(data))
       .catch();
-  }
+  };
 
   return (
-  <Container fluid="md">
-    <Form onSubmit={handleSubmit}>
-      <Row className="justify-content-center g-0">
-        <Col xs="8" md={{
-          size: 6
-        }}>
-          <FormGroup>
-            <Input
-              name="word"
-              placeholder="with a placeholder"
-              type="text"
-            />
-          </FormGroup>
-        </Col>
-        <Col xs="4" className="m-0" md={{
-          size: 1
-        }}>
-          <Button>Submit</Button>
-        </Col>
-      </Row>
-    </Form>
-    <FormResults data={state} />
+    <Container fluid="md">
+      <Form onSubmit={handleSubmit} className="mt-4">
+        <Row className="justify-content-center g-0">
+          <Col
+            xs="8"
+            md={{
+              size: 6,
+            }}
+          >
+            <FormGroup>
+              <Input name="word" placeholder="Type a word..." type="text" />
+            </FormGroup>
+          </Col>
+          <Col
+            xs="4"
+            md={{
+              size: 1,
+            }}
+          >
+            <Button>Search</Button>
+          </Col>
+        </Row>
+      </Form>
+      <FormResults data={state} />
     </Container>
   );
 };
