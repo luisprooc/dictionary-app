@@ -42,8 +42,8 @@ const FormSeeker = () => {
             </FormGroup>
           </Col>
           <Col
-            xs="4"
-            md={{
+            xs="auto"
+            lg={{
               size: 1,
             }}
           >
